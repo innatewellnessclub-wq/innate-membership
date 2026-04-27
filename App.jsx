@@ -484,6 +484,167 @@ const styles = `
     cursor: pointer;
     font-weight: 300;
   }
+
+  /* HISTORY */
+  .hist-wrap { margin-bottom: 50px; }
+
+  .cal-strip {
+    background: var(--white);
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .cal-row {
+    display: flex;
+    gap: 4px;
+  }
+
+  .cal-cell {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .cal-lbl {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .cal-num {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--charcoal);
+    font-weight: 300;
+    position: relative;
+    border-radius: 50%;
+  }
+
+  .cal-num.today {
+    background: var(--charcoal);
+    color: var(--ecru);
+    font-weight: 400;
+  }
+
+  .cal-num.has-log::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--olive);
+  }
+
+  .cal-num.today.has-log::after {
+    background: var(--ecru);
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .tl-date-header {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--olive);
+    font-weight: 400;
+    padding: 16px 0 8px;
+    border-bottom: 1px solid var(--sand);
+    margin-bottom: 8px;
+  }
+
+  .tl-entry {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    background: var(--white);
+    margin-bottom: 2px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .tl-entry:hover { background: var(--sand); }
+
+  .tl-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .tl-dot.yoga { background: var(--greige); }
+  .tl-dot.fitness { background: var(--mocha); }
+  .tl-dot.meditation { background: var(--olive); }
+
+  .tl-info { flex: 1; }
+
+  .tl-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--charcoal);
+    margin-bottom: 2px;
+  }
+
+  .tl-meta {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 300;
+  }
+
+  .tl-check {
+    font-size: 11px;
+    color: var(--olive);
+    letter-spacing: 0.06em;
+    font-weight: 300;
+  }
+
+  .log-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--olive);
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ecru);
+    cursor: pointer;
+    transition: opacity 0.2s;
+    font-weight: 400;
+    flex-shrink: 0;
+  }
+
+  .log-btn:hover { opacity: 0.85; }
+  .log-btn.logged { background: var(--greige); color: var(--muted); }
+
+  .empty-hist {
+    padding: 32px 16px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 300;
+    letter-spacing: 0.06em;
+  }
 `;
 
 const videos = [
@@ -528,6 +689,67 @@ export default function App() {
 
   const toggle = id => setHabits(h=>h.map(x=>x.id===id?{...x,checked:!x.checked}:x));
 
+  const [logged, setLogged] = useState(() => {
+    try {
+      const saved = localStorage.getItem('innate_logs');
+      if (saved) return JSON.parse(saved);
+    } catch(e) {}
+    return [];
+  });
+
+  const logWorkout = (video) => {
+    const today = new Date().toISOString().split('T')[0];
+    const alreadyLogged = logged.some(l => l.date === today && l.videoId === video.id);
+    if (alreadyLogged) return;
+    const newEntry = {
+      id: Date.now().toString(),
+      date: today,
+      videoId: video.id,
+      cat: video.cat,
+      title: video.title,
+      duration: video.duration
+    };
+    setLogged(prev => {
+      const updated = [newEntry, ...prev];
+      try { localStorage.setItem('innate_logs', JSON.stringify(updated)); } catch(e) {}
+      return updated;
+    });
+  };
+
+  const isLoggedToday = (videoId) => {
+    const today = new Date().toISOString().split('T')[0];
+    return logged.some(l => l.date === today && l.videoId === videoId);
+  };
+
+  // Group logs by date
+  const groupedLogs = logged.reduce((acc, entry) => {
+    if (!acc[entry.date]) acc[entry.date] = [];
+    acc[entry.date].push(entry);
+    return acc;
+  }, {});
+
+  // Get dates with logs for calendar dots
+  const logDates = new Set(logged.map(l => l.date));
+
+  // Build week days
+  const getWeekDays = () => {
+    const days = [];
+    const t = new Date();
+    const dayOfWeek = t.getDay();
+    const monday = new Date(t);
+    monday.setDate(t.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(monday);
+      d.setDate(monday.getDate() + i);
+      days.push(d);
+    }
+    return days;
+  };
+
+  const weekDays = getWeekDays();
+  const dayLabels = ['M','T','W','T','F','S','S'];
+  const todayStr = new Date().toISOString().split('T')[0];
+
   const addHabit = () => {
     if (!newH.trim()) return;
     setHabits(h=>[...h,{id:Date.now(),name:newH.trim(),emoji:"✦",checked:false,streak:0}]);
@@ -549,7 +771,7 @@ export default function App() {
         <nav className="nav">
           <div className="logo">INNATE</div>
           <div className="nav-tabs">
-            {[["movement","Move"],["nourish","Nourish"],["habits","Habits"]].map(([k,l])=>(
+            {[["movement","Move"],["nourish","Nourish"],["habits","Habits"],["history","History"]].map(([k,l])=>(
               <button key={k} className={`tab-btn ${tab===k?"active":""}`} onClick={()=>setTab(k)}>{l}</button>
             ))}
           </div>
@@ -561,6 +783,7 @@ export default function App() {
               {tab==="movement"&&"Move with intention."}
               {tab==="nourish"&&"Nourish from within."}
               {tab==="habits"&&"Design your daily self."}
+              {tab==="history"&&"Your journey, recorded."}
             </div>
             <div className="banner-sub">INNATE Membership</div>
           </div>
@@ -591,10 +814,16 @@ export default function App() {
                     </div>
                     <div className="vdur">{v.duration}</div>
                   </div>
-                  <div className="vinfo">
-                    <div className="vcat">{v.cat}</div>
-                    <div className="vtitle">{v.title}</div>
-                    <div className="vmeta"><span>{v.level}</span><span>{v.duration}</span></div>
+                  <div className="vinfo" style={{display:'flex',alignItems:'flex-start',gap:'10px'}}>
+                    <div style={{flex:1}}>
+                      <div className="vcat">{v.cat}</div>
+                      <div className="vtitle">{v.title}</div>
+                      <div className="vmeta"><span>{v.level}</span><span>{v.duration}</span></div>
+                    </div>
+                    <button
+                      className={`log-btn ${isLoggedToday(v.id)?'logged':''}`}
+                      onClick={()=>logWorkout(v)}
+                    >{isLoggedToday(v.id)?'✓ Done':'Log'}</button>
                   </div>
                 </div>
               ))}
@@ -676,6 +905,61 @@ export default function App() {
               ):(
                 <button className="add-btn" onClick={()=>setAdding(true)}>+ Add Habit</button>
               )}
+            </div>
+          </>}
+
+          {tab==="history"&&<>
+            <div className="hist-wrap">
+              <div className="cal-strip">
+                <div className="cal-row">
+                  {weekDays.map((d,i)=>{
+                    const ds = d.toISOString().split('T')[0];
+                    const isToday = ds === todayStr;
+                    const hasLog = logDates.has(ds);
+                    return (
+                      <div className="cal-cell" key={i}>
+                        <div className="cal-lbl">{dayLabels[i]}</div>
+                        <div className={`cal-num ${isToday?'today':''} ${hasLog?'has-log':''}`}>{d.getDate()}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="sec-label">
+                <h2>This Week</h2>
+                <span>{logged.length} sessions</span>
+                <div className="line"/>
+              </div>
+              <div className="timeline">
+                {weekDays.slice().reverse().map((d)=>{
+                  const ds = d.toISOString().split('T')[0];
+                  const isToday = ds === todayStr;
+                  const entries = groupedLogs[ds] || [];
+                  const label = isToday ? 'Today' : d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+                  return (
+                    <div key={ds} style={{marginBottom:'4px'}}>
+                      <div className="tl-date-header" style={{display:'flex',alignItems:'center',gap:'8px'}}>
+                        <span>{label}</span>
+                        {entries.length > 0 && <span style={{color:'var(--olive)',fontSize:'8px',letterSpacing:'0.1em'}}>{entries.length} session{entries.length>1?'s':''}</span>}
+                      </div>
+                      {entries.length === 0 ? (
+                        <div style={{padding:'10px 16px',background:'var(--white)',marginBottom:'2px'}}>
+                          <span style={{fontSize:'11px',color:'var(--greige)',fontWeight:300,letterSpacing:'0.04em'}}>— Rest day</span>
+                        </div>
+                      ) : entries.map(entry=>(
+                        <div className="tl-entry" key={entry.id}>
+                          <div className={`tl-dot ${entry.cat}`}/>
+                          <div className="tl-info">
+                            <div className="tl-title">{entry.title}</div>
+                            <div className="tl-meta">{entry.cat} · {entry.duration}</div>
+                          </div>
+                          <div className="tl-check">✓</div>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </>}
 
