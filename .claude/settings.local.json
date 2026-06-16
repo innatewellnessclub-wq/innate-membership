@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp /Users/aika/Downloads/innate-membership.jsx /Users/aika/Downloads/innate-app/src/App.jsx)",
+      "Bash(npm run *)",
+      "Bash(git --version)"
+    ]
+  }
+}
