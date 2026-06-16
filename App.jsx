@@ -794,7 +794,6 @@ const styles = `
 
 const videos = [
   {id:1,cat:"yoga",      title:"肩・背中周りほぐしヨガ",    duration:"4 min",level:"All levels",youtubeId:"c0J49rvR2Ko"},
-  {id:9,cat:"yoga",      title:"太陽礼拝",                     duration:"7 min",level:"All levels",youtubeId:"KsRbB1aQ_V0"},
   {id:2,cat:"yoga",      title:"Evening Wind-Down Yin",             duration:"32 min",level:"Beginner"},
   {id:3,cat:"yoga",      title:"Strong Foundation — Hip & Glute",   duration:"24 min",level:"Intermediate"},
   {id:4,cat:"fitness",   title:"Pilates Core Activation",           duration:"20 min",level:"All levels"},
@@ -846,7 +845,6 @@ const PRESET_EMOJIS = {
 };
 
 const DAYS=["M","T","W","T","F","S","S"];
-// DONE is now computed dynamically below
 
 export default function App() {
   const [tab,      setTab]      = useState("movement");
@@ -893,17 +891,14 @@ export default function App() {
     return logged.some(l => l.date === today && l.videoId === videoId);
   };
 
-  // Group logs by date
   const groupedLogs = logged.reduce((acc, entry) => {
     if (!acc[entry.date]) acc[entry.date] = [];
     acc[entry.date].push(entry);
     return acc;
   }, {});
 
-  // Get dates with logs for calendar dots
   const logDates = new Set(logged.map(l => l.date));
 
-  // Build week days
   const getWeekDays = () => {
     const days = [];
     const t = new Date();
@@ -1101,8 +1096,7 @@ export default function App() {
                   <button className="add-btn" style={{flex:2,background:'var(--olive)',color:'var(--ecru)',border:'none'}}
                     onClick={()=>setShowPresets(true)}>+ Add Habit</button>
                   <button className="add-btn" style={{flex:1,color:'var(--muted)'}}
-                    onClick={()=>{setHabits(DEFAULT_HABITS.map(h=>({...h,id:Date.now()+Math.random()})));setEditMode(false);}}
-                    >Reset</button>
+                    onClick={()=>{setHabits(DEFAULT_HABITS.map(h=>({...h,id:Date.now()+Math.random()})));setEditMode(false);}}>Reset</button>
                 </>}
               </div>
 
@@ -1113,7 +1107,6 @@ export default function App() {
                       <span>Add a Habit</span>
                       <button className="preset-close" onClick={()=>setShowPresets(false)}>×</button>
                     </div>
-
                     <div className="preset-cats">
                       {HABIT_PRESETS.map(p=>(
                         <button key={p.cat}
@@ -1122,7 +1115,6 @@ export default function App() {
                         >{p.emoji} {p.cat}</button>
                       ))}
                     </div>
-
                     <div className="preset-items">
                       {(presetCat
                         ? HABIT_PRESETS.filter(p=>p.cat===presetCat)
@@ -1143,9 +1135,7 @@ export default function App() {
                         );
                       }))}
                     </div>
-
                     <div className="preset-divider"/>
-
                     <div style={{fontSize:'9px',letterSpacing:'0.16em',textTransform:'uppercase',color:'var(--muted)',marginBottom:'10px',fontWeight:400}}>Custom</div>
                     <div className="preset-custom">
                       <input
