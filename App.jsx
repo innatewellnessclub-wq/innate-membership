@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap');
+  /* Using system Helvetica Neue */
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -18,7 +18,7 @@ const styles = `
   }
 
   .app {
-    font-family: 'Jost', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background: var(--ecru);
     min-height: 100vh;
     color: var(--charcoal);
@@ -36,7 +36,7 @@ const styles = `
   }
 
   .logo {
-    font-family: 'Jost', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 20px;
     font-weight: 500;
     letter-spacing: 0.3em;
@@ -56,7 +56,7 @@ const styles = `
     padding: 7px 20px;
     border: none;
     background: transparent;
-    font-family: 'Jost', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 10px;
     font-weight: 400;
     letter-spacing: 0.2em;
@@ -76,26 +76,27 @@ const styles = `
   }
 
   .banner {
-    background: var(--olive);
-    padding: 30px 36px 26px;
+    background: var(--white);
+    padding: 28px 24px 24px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+    border-bottom: 1px solid var(--sand);
   }
 
   .banner-title {
-    font-family: 'Crimson Pro', serif;
-    font-size: 40px;
-    font-weight: 300;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 32px;
+    font-weight: 200;
     font-style: italic;
-    color: var(--ecru);
+    color: var(--charcoal);
     line-height: 1;
   }
 
   .banner-sub {
     font-size: 9px;
     letter-spacing: 0.22em;
-    color: rgba(238,236,232,0.5);
+    color: var(--muted);
     text-transform: uppercase;
     font-weight: 300;
     margin-top: 6px;
@@ -104,7 +105,7 @@ const styles = `
   .banner-date {
     font-size: 10px;
     letter-spacing: 0.1em;
-    color: rgba(238,236,232,0.45);
+    color: var(--muted);
     text-transform: uppercase;
     font-weight: 300;
     text-align: right;
@@ -113,21 +114,21 @@ const styles = `
   .main {
     max-width: 1080px;
     margin: 0 auto;
-    padding: 36px 36px 64px;
+    padding: 28px 20px 80px;
   }
 
   .sec-label {
     display: flex;
     align-items: center;
     gap: 14px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
   }
 
   .sec-label h2 {
-    font-size: 10px;
-    letter-spacing: 0.24em;
+    font-size: 11px;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    font-weight: 400;
+    font-weight: 500;
     color: var(--charcoal);
     white-space: nowrap;
   }
@@ -144,7 +145,7 @@ const styles = `
   .filters {
     display: flex;
     gap: 5px;
-    margin-bottom: 22px;
+    margin-bottom: 24px;
     flex-wrap: wrap;
   }
 
@@ -152,14 +153,14 @@ const styles = `
     padding: 5px 14px;
     border: 1px solid var(--greige);
     background: transparent;
-    font-family: 'Jost', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 9px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--charcoal);
     cursor: pointer;
     transition: all 0.18s;
-    font-weight: 300;
+    font-weight: 400;
   }
 
   .pill.active { background: var(--charcoal); border-color: var(--charcoal); color: var(--ecru); }
@@ -168,12 +169,14 @@ const styles = `
   .video-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
-    gap: 14px;
-    margin-bottom: 50px;
+    gap: 18px;
+    margin-bottom: 56px;
   }
 
   .vc {
     background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
   }
@@ -206,20 +209,20 @@ const styles = `
     font-weight: 300;
   }
 
-  .vinfo { padding: 15px 17px 17px; }
+  .vinfo { padding: 18px 20px 20px; }
 
   .vcat {
-    font-size: 8px;
-    letter-spacing: 0.22em;
+    font-size: 9px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--olive);
-    font-weight: 400;
+    font-weight: 500;
     margin-bottom: 7px;
   }
 
   .vtitle {
-    font-family: 'Crimson Pro', serif;
-    font-size: 17px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 19px;
     font-weight: 300;
     color: var(--charcoal);
     line-height: 1.3;
@@ -227,9 +230,9 @@ const styles = `
   }
 
   .vmeta {
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--charcoal);
     display: flex;
     gap: 12px;
     font-weight: 300;
@@ -239,13 +242,14 @@ const styles = `
   .recipe-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
-    gap: 12px;
-    margin-bottom: 50px;
+    gap: 14px;
+    margin-bottom: 56px;
   }
 
   .rc {
     background: var(--white);
-    padding: 19px 21px;
+    border-radius: 12px;
+    padding: 22px 22px 24px;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     border-top: 2px solid transparent;
@@ -265,14 +269,14 @@ const styles = `
     margin-bottom: 9px;
   }
 
-  .rtime.morning { color: #A8882A; }
-  .rtime.lunch   { color: var(--olive); }
-  .rtime.dinner  { color: var(--mocha); }
-  .rtime.snack   { color: var(--muted); }
+  .rtime.morning { color: #8B6A10; }
+  .rtime.lunch   { color: #3A4C37; }
+  .rtime.dinner  { color: #6B5040; }
+  .rtime.snack   { color: var(--charcoal); }
 
   .rtitle {
-    font-family: 'Crimson Pro', serif;
-    font-size: 18px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 20px;
     font-weight: 300;
     color: var(--charcoal);
     line-height: 1.3;
@@ -280,8 +284,8 @@ const styles = `
   }
 
   .rdesc {
-    font-size: 11px;
-    color: var(--muted);
+    font-size: 12px;
+    color: var(--charcoal);
     line-height: 1.65;
     margin-bottom: 13px;
     font-weight: 300;
@@ -302,7 +306,8 @@ const styles = `
   /* HABIT */
   .hbox {
     background: var(--white);
-    padding: 28px 30px;
+    border-radius: 16px;
+    padding: 32px 24px;
     margin-bottom: 50px;
   }
 
@@ -316,7 +321,7 @@ const styles = `
   }
 
   .htop-l h2 {
-    font-family: 'Crimson Pro', serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 26px;
     font-weight: 300;
     font-style: italic;
@@ -333,7 +338,7 @@ const styles = `
   }
 
   .streak-n {
-    font-family: 'Crimson Pro', serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 38px;
     font-weight: 300;
     color: var(--olive);
@@ -382,7 +387,8 @@ const styles = `
     display: flex;
     align-items: center;
     gap: 14px;
-    padding: 12px 16px;
+    padding: 14px 18px;
+    border-radius: 10px;
     background: var(--ecru);
     margin-bottom: 18px;
   }
@@ -399,13 +405,14 @@ const styles = `
   .prog-bar { flex:1; height:2px; background:var(--sand); }
   .prog-fill { height:2px; background:var(--olive); transition:width 0.4s; }
 
-  .hlist { display:flex; flex-direction:column; gap:2px; }
+  .hlist { display:flex; flex-direction:column; gap:6px; }
 
   .hrow {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 13px;
+    gap: 14px;
+    padding: 15px 16px;
+    border-radius: 10px;
     background: var(--ecru);
     cursor: pointer;
     transition: background 0.15s;
@@ -427,7 +434,7 @@ const styles = `
 
   .hname {
     flex: 1;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 300;
     color: var(--charcoal);
     letter-spacing: 0.02em;
@@ -443,7 +450,7 @@ const styles = `
     padding: 10px;
     border: 1px dashed var(--greige);
     background: transparent;
-    font-family: 'Jost', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 9px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -462,7 +469,7 @@ const styles = `
     padding: 9px 13px;
     border: 1px solid var(--greige);
     background: var(--ecru);
-    font-family: 'Jost', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 11px;
     font-weight: 300;
     color: var(--charcoal);
@@ -476,7 +483,7 @@ const styles = `
     padding: 9px 13px;
     border: 1px solid var(--sand);
     background: transparent;
-    font-family: 'Jost', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 9px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -594,7 +601,7 @@ const styles = `
   .tl-info { flex: 1; }
 
   .tl-title {
-    font-family: 'Crimson Pro', serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 16px;
     font-weight: 300;
     color: var(--charcoal);
@@ -623,7 +630,7 @@ const styles = `
     padding: 10px 16px;
     background: var(--olive);
     border: none;
-    font-family: 'Jost', sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 9px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -637,6 +644,144 @@ const styles = `
   .log-btn:hover { opacity: 0.85; }
   .log-btn.logged { background: var(--greige); color: var(--muted); }
 
+  /* PRESET SHEET */
+  .preset-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(46,46,44,0.4);
+    z-index: 200;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .preset-sheet {
+    background: var(--white);
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    padding: 24px 24px 40px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .preset-sheet-title {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .preset-close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .preset-cats {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .preset-cat-btn {
+    padding: 5px 14px;
+    border: 1px solid var(--greige);
+    background: transparent;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    font-weight: 300;
+    transition: all 0.15s;
+  }
+
+  .preset-cat-btn.active {
+    background: var(--charcoal);
+    border-color: var(--charcoal);
+    color: var(--ecru);
+  }
+
+  .preset-items {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 16px;
+  }
+
+  .preset-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    background: var(--ecru);
+    cursor: pointer;
+    transition: background 0.15s;
+    border: none;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--charcoal);
+    text-align: left;
+    letter-spacing: 0.02em;
+    width: 100%;
+  }
+
+  .preset-item:hover { background: var(--sand); }
+
+  .preset-item.added {
+    color: var(--muted);
+    background: var(--white);
+  }
+
+  .preset-divider {
+    height: 1px;
+    background: var(--sand);
+    margin: 14px 0;
+  }
+
+  .preset-custom {
+    display: flex;
+    gap: 6px;
+  }
+
+  .preset-custom input {
+    flex: 1;
+    padding: 9px 13px;
+    border: 1px solid var(--greige);
+    background: var(--ecru);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--charcoal);
+    outline: none;
+    letter-spacing: 0.04em;
+  }
+
+  .preset-custom input:focus { border-color: var(--olive); }
+
+  .preset-add-btn {
+    padding: 9px 16px;
+    background: var(--olive);
+    border: none;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ecru);
+    cursor: pointer;
+    font-weight: 400;
+  }
+
   .empty-hist {
     padding: 32px 16px;
     text-align: center;
@@ -648,7 +793,7 @@ const styles = `
 `;
 
 const videos = [
-  {id:1,cat:"yoga",      title:"Morning Flow — Open the Spine",    duration:"18 min",level:"All levels"},
+  {id:1,cat:"yoga",      title:"肩・背中周りほぐしヨガ",    duration:"4 min",level:"All levels",youtubeId:"c0J49rvR2Ko"},
   {id:2,cat:"yoga",      title:"Evening Wind-Down Yin",             duration:"32 min",level:"Beginner"},
   {id:3,cat:"yoga",      title:"Strong Foundation — Hip & Glute",   duration:"24 min",level:"Intermediate"},
   {id:4,cat:"fitness",   title:"Pilates Core Activation",           duration:"20 min",level:"All levels"},
@@ -668,6 +813,14 @@ const recipes = [
   {id:7,time:"snack",  title:"Almond Date Bites",          desc:"Medjool dates, almond butter, and a pinch of sea salt.",    tags:["No-bake","5 min"]},
 ];
 
+const DEFAULT_HABITS = [
+  {id:'d1',name:'Morning movement',   emoji:'🧘',checked:false,streak:0},
+  {id:'d2',name:'Hydrate — 2L water', emoji:'💧',checked:false,streak:0},
+  {id:'d3',name:'10 min meditation',  emoji:'🌿',checked:false,streak:0},
+  {id:'d4',name:'Read / journal',     emoji:'📖',checked:false,streak:0},
+  {id:'d5',name:'No screen after 9pm',emoji:'🌙',checked:false,streak:0},
+];
+
 const initHabits = [
   {id:1,name:"Morning movement",   emoji:"🧘",checked:true, streak:7},
   {id:2,name:"Hydrate — 2L water", emoji:"💧",checked:true, streak:5},
@@ -676,8 +829,22 @@ const initHabits = [
   {id:5,name:"No screen after 9pm",emoji:"🌙",checked:false,streak:1},
 ];
 
+const HABIT_PRESETS = [
+  { cat:'MOVE',    emoji:'🧘', items:['Yoga','Pilates','Stretching','Meditation','Breathwork','Walk','Run','Strength','Barre','Swimming'] },
+  { cat:'NOURISH', emoji:'🥗', items:['Healthy breakfast','2L water','No sugar','Cook at home','No alcohol','Green juice'] },
+  { cat:'MIND',    emoji:'📖', items:['Journal','Read','Gratitude','Digital detox','No screen after 9pm','Early wake-up'] },
+  { cat:'REST',    emoji:'🌙', items:['8h sleep','Nap','Bath','Sauna','Slow morning'] },
+];
+
+const PRESET_EMOJIS = {
+  'Yoga':'🧘','Pilates':'🧘','Stretching':'🤸','Meditation':'🌿','Breathwork':'🫁',
+  'Walk':'👟','Run':'🏃','Strength':'💪','Barre':'🩰','Swimming':'🏊',
+  'Healthy breakfast':'🍳','2L water':'💧','No sugar':'🚫','Cook at home':'🍲','No alcohol':'🍃','Green juice':'🥤',
+  'Journal':'📖','Read':'📚','Gratitude':'🙏','Digital detox':'📵','No screen after 9pm':'🌙','Early wake-up':'🌅',
+  '8h sleep':'😴','Nap':'💤','Bath':'🛁','Sauna':'🧖','Slow morning':'☕',
+};
+
 const DAYS=["M","T","W","T","F","S","S"];
-const DONE=[true,true,true,true,false,false,false];
 
 export default function App() {
   const [tab,      setTab]      = useState("movement");
@@ -686,6 +853,9 @@ export default function App() {
   const [habits,   setHabits]   = useState(initHabits);
   const [adding,   setAdding]   = useState(false);
   const [newH,     setNewH]     = useState("");
+  const [showPresets, setShowPresets] = useState(false);
+  const [presetCat,   setPresetCat]   = useState(null);
+  const [editMode,    setEditMode]    = useState(false);
 
   const toggle = id => setHabits(h=>h.map(x=>x.id===id?{...x,checked:!x.checked}:x));
 
@@ -721,17 +891,14 @@ export default function App() {
     return logged.some(l => l.date === today && l.videoId === videoId);
   };
 
-  // Group logs by date
   const groupedLogs = logged.reduce((acc, entry) => {
     if (!acc[entry.date]) acc[entry.date] = [];
     acc[entry.date].push(entry);
     return acc;
   }, {});
 
-  // Get dates with logs for calendar dots
   const logDates = new Set(logged.map(l => l.date));
 
-  // Build week days
   const getWeekDays = () => {
     const days = [];
     const t = new Date();
@@ -759,8 +926,8 @@ export default function App() {
   const fv = vf==="all"?videos:videos.filter(v=>v.cat===vf);
   const fr = rf==="all"?recipes:recipes.filter(r=>r.time===rf);
   const done = habits.filter(h=>h.checked).length;
-  const pct = Math.round(done/habits.length*100);
-  const topS = Math.max(...habits.map(h=>h.streak));
+  const pct = habits.length > 0 ? Math.round(done/habits.length*100) : 0;
+  const topS = habits.length > 0 ? Math.max(...habits.map(h=>h.streak)) : 0;
   const today = new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
 
   return (
@@ -771,7 +938,7 @@ export default function App() {
         <nav className="nav">
           <div className="logo">INNATE</div>
           <div className="nav-tabs">
-            {[["movement","Move"],["nourish","Nourish"],["habits","Habits"],["history","History"]].map(([k,l])=>(
+            {[["movement","Studio"],["nourish","Nourish"],["habits","Habits"],["history","History"]].map(([k,l])=>(
               <button key={k} className={`tab-btn ${tab===k?"active":""}`} onClick={()=>setTab(k)}>{l}</button>
             ))}
           </div>
@@ -780,7 +947,7 @@ export default function App() {
         <div className="banner">
           <div>
             <div className="banner-title">
-              {tab==="movement"&&"Move with intention."}
+              {tab==="movement"&&"Studio time."}
               {tab==="nourish"&&"Nourish from within."}
               {tab==="habits"&&"Design your daily self."}
               {tab==="history"&&"Your journey, recorded."}
@@ -806,14 +973,35 @@ export default function App() {
             <div className="video-grid">
               {fv.map(v=>(
                 <div className="vc" key={v.id}>
-                  <div className={`vthumb ${v.cat}`}>
-                    <div className="play-ring">
-                      <svg width="11" height="13" viewBox="0 0 11 13" fill="none">
-                        <path d="M1 1L10 6.5L1 12V1Z" fill="rgba(250,250,248,0.85)"/>
-                      </svg>
+                  {v.youtubeId ? (
+                    <div
+                      style={{position:'relative',aspectRatio:'16/9',cursor:'pointer',overflow:'hidden'}}
+                      onClick={()=>window.open(`https://www.youtube.com/watch?v=${v.youtubeId}`,'_blank')}
+                    >
+                      <img
+                        src={`https://img.youtube.com/vi/${v.youtubeId}/maxresdefault.jpg`}
+                        alt={v.title}
+                        style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}
+                      />
+                      <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(0,0,0,0.15)'}}>
+                        <div style={{width:48,height:48,borderRadius:'50%',background:'rgba(250,250,248,0.92)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+                          <svg width="16" height="18" viewBox="0 0 16 18" fill="none">
+                            <path d="M2 1L14 9L2 17V1Z" fill="#2A2A28"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <div style={{position:'absolute',bottom:10,right:12,fontSize:10,color:'rgba(250,250,248,0.85)',letterSpacing:'0.08em',fontWeight:300}}>{v.duration}</div>
                     </div>
-                    <div className="vdur">{v.duration}</div>
-                  </div>
+                  ) : (
+                    <div className={`vthumb ${v.cat}`}>
+                      <div className="play-ring">
+                        <svg width="11" height="13" viewBox="0 0 11 13" fill="none">
+                          <path d="M1 1L10 6.5L1 12V1Z" fill="rgba(250,250,248,0.85)"/>
+                        </svg>
+                      </div>
+                      <div className="vdur">{v.duration}</div>
+                    </div>
+                  )}
                   <div className="vinfo" style={{display:'flex',alignItems:'flex-start',gap:'10px'}}>
                     <div style={{flex:1}}>
                       <div className="vcat">{v.cat}</div>
@@ -867,12 +1055,17 @@ export default function App() {
               </div>
 
               <div className="week">
-                {DAYS.map((d,i)=>(
-                  <div className="dc" key={i}>
-                    <div className="dlbl">{d}</div>
-                    <div className={`ddot ${DONE[i]?"done":""} ${i===4?"today":""}`}>{DONE[i]?"✓":""}</div>
-                  </div>
-                ))}
+                {weekDays.map((d,i)=>{
+                  const ds = d.toISOString().split('T')[0];
+                  const isToday = ds === todayStr;
+                  const allDone = isToday && habits.every(h=>h.checked);
+                  return (
+                    <div className="dc" key={i}>
+                      <div className="dlbl">{DAYS[i]}</div>
+                      <div className={`ddot ${allDone?"done":""} ${isToday?"today":""}`}>{allDone?"✓":""}</div>
+                    </div>
+                  );
+                })}
               </div>
 
               <div className="prog">
@@ -889,21 +1082,81 @@ export default function App() {
                     </div>
                     <div className="hemoji">{h.emoji}</div>
                     <div className={`hname ${h.checked?"done":""}`}>{h.name}</div>
-                    <div className="hst">{h.streak}d</div>
+                    {editMode && <button onClick={e=>{e.stopPropagation();setHabits(prev=>prev.filter(x=>x.id!==h.id));}} style={{background:"none",border:"none",color:"var(--muted)",fontSize:"18px",cursor:"pointer",padding:"0 0 0 8px",flexShrink:0,lineHeight:1}}>×</button>}
                   </div>
                 ))}
               </div>
 
-              {adding?(
-                <div className="add-row">
-                  <input className="add-input" autoFocus value={newH} onChange={e=>setNewH(e.target.value)}
-                    placeholder="New habit..."
-                    onKeyDown={e=>{if(e.key==="Enter")addHabit();if(e.key==="Escape")setAdding(false);}}
-                  />
-                  <button className="cancel" onClick={()=>setAdding(false)}>Cancel</button>
+              <div style={{display:'flex',gap:'8px',marginTop:'10px'}}>
+                <button className="add-btn" style={{flex:1}}
+                  onClick={()=>editMode ? setEditMode(false) : setEditMode(true)}>
+                  {editMode ? 'Done' : 'Edit'}
+                </button>
+                {editMode && <>
+                  <button className="add-btn" style={{flex:2,background:'var(--olive)',color:'var(--ecru)',border:'none'}}
+                    onClick={()=>setShowPresets(true)}>+ Add Habit</button>
+                  <button className="add-btn" style={{flex:1,color:'var(--muted)'}}
+                    onClick={()=>{setHabits(DEFAULT_HABITS.map(h=>({...h,id:Date.now()+Math.random()})));setEditMode(false);}}>Reset</button>
+                </>}
+              </div>
+
+              {showPresets && (
+                <div className="preset-overlay" onClick={e=>{if(e.target.className==='preset-overlay')setShowPresets(false)}}>
+                  <div className="preset-sheet">
+                    <div className="preset-sheet-title">
+                      <span>Add a Habit</span>
+                      <button className="preset-close" onClick={()=>setShowPresets(false)}>×</button>
+                    </div>
+                    <div className="preset-cats">
+                      {HABIT_PRESETS.map(p=>(
+                        <button key={p.cat}
+                          className={`preset-cat-btn ${presetCat===p.cat?'active':''}`}
+                          onClick={()=>setPresetCat(presetCat===p.cat?null:p.cat)}
+                        >{p.emoji} {p.cat}</button>
+                      ))}
+                    </div>
+                    <div className="preset-items">
+                      {(presetCat
+                        ? HABIT_PRESETS.filter(p=>p.cat===presetCat)
+                        : HABIT_PRESETS
+                      ).map(p=>p.items.map(item=>{
+                        const alreadyAdded = habits.some(h=>h.name===item);
+                        return (
+                          <button key={item} className={`preset-item ${alreadyAdded?'added':''}`}
+                            onClick={()=>{
+                              if(alreadyAdded) return;
+                              setHabits(h=>[...h,{id:Date.now(),name:item,emoji:PRESET_EMOJIS[item]||'✦',checked:false,streak:0}]);
+                            }}
+                          >
+                            <span>{PRESET_EMOJIS[item]||'✦'}</span>
+                            <span>{item}</span>
+                            {alreadyAdded && <span style={{marginLeft:'auto',fontSize:'10px',color:'var(--olive)'}}>✓ Added</span>}
+                          </button>
+                        );
+                      }))}
+                    </div>
+                    <div className="preset-divider"/>
+                    <div style={{fontSize:'9px',letterSpacing:'0.16em',textTransform:'uppercase',color:'var(--muted)',marginBottom:'10px',fontWeight:400}}>Custom</div>
+                    <div className="preset-custom">
+                      <input
+                        value={newH}
+                        onChange={e=>setNewH(e.target.value)}
+                        placeholder="Type your own habit..."
+                        onKeyDown={e=>{
+                          if(e.key==='Enter'&&newH.trim()){
+                            setHabits(h=>[...h,{id:Date.now(),name:newH.trim(),emoji:'✦',checked:false,streak:0}]);
+                            setNewH('');
+                          }
+                        }}
+                      />
+                      <button className="preset-add-btn" onClick={()=>{
+                        if(!newH.trim()) return;
+                        setHabits(h=>[...h,{id:Date.now(),name:newH.trim(),emoji:'✦',checked:false,streak:0}]);
+                        setNewH('');
+                      }}>Add</button>
+                    </div>
+                  </div>
                 </div>
-              ):(
-                <button className="add-btn" onClick={()=>setAdding(true)}>+ Add Habit</button>
               )}
             </div>
           </>}
@@ -931,7 +1184,7 @@ export default function App() {
                 <div className="line"/>
               </div>
               <div className="timeline">
-                {weekDays.slice().reverse().map((d)=>{
+                {weekDays.map((d)=>{
                   const ds = d.toISOString().split('T')[0];
                   const isToday = ds === todayStr;
                   const entries = groupedLogs[ds] || [];
